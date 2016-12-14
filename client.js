@@ -15,9 +15,10 @@ var outcome = function(res){
 var options = {
 	hostname:'localhost',
 	port:8080,
-	method:'GET',
+	method:'POST',
 	path:'/a.txt'
 }
 
 var req = http.request(options,outcome);
+req.write('Joy');
 req.end();

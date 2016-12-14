@@ -1,17 +1,35 @@
 var http = require('http');
 var fs = require('fs');
 
-var callGetMethod = function(req, res){
+var getContent = function(req){
 	if(req.url == '/')
 		return 'hello';
-	var content = fs.readFileSync('.'+req.url);
-	return content;
+	return fs.readFileSync('.'+req.url);
+}
+
+var callGetMethod = function(req, res){
+	res.end(getContent(req));
+};
+
+var callPostMethod = function(req, res){
+	var content = getContent(req, res);
+	var result = '';
+	req.on('data', function(chunk){
+		result += chunk;
+	})
+
+	req.on('end',function(){
+		res.end(content+result);
+	})
 }
 
 var server = http.createServer(function(req, res){
 	if(req.method == 'GET'){
-		res.end(callGetMethod(req, res));
+		callGetMethod(req,res);
 	}
+	callPostMethod(req, res);
+	
+
 });
 
 
