@@ -1,16 +1,9 @@
 var http = require('http');
+var fs = require('fs');
 var server = http.createServer(function(req, res){
-	console.log(req);
-	req.setEncoding('utf8');
-	var name = '';
-	req.on('data',function(chunk){
-		name += chunk;
-	})
-
-	req.on('end',function(){
-		res.setHeader('Content-Type','text/plain');
-		res.end("hello"+name);
-	})
+	var content = fs.readFileSync('.'+req.url);
+	res.write(content);
+	res.end();
 	
 });
 
