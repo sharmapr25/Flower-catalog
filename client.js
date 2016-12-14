@@ -12,5 +12,12 @@ var outcome = function(res){
 	})
 };
 
-var req = http.request('http://localhost:8080',outcome);
+var options = {
+	hostname:'localhost',
+	port:8080,
+	method:'POST'
+}
+
+var req = http.request(options,outcome);
+req.write('joy');
 req.end();
