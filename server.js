@@ -1,10 +1,17 @@
 var http = require('http');
 var fs = require('fs');
-var server = http.createServer(function(req, res){
+
+var callGetMethod = function(req, res){
+	if(req.url == '/')
+		return 'hello';
 	var content = fs.readFileSync('.'+req.url);
-	res.write(content);
-	res.end();
-	
+	return content;
+}
+
+var server = http.createServer(function(req, res){
+	if(req.method == 'GET'){
+		res.end(callGetMethod(req, res));
+	}
 });
 
 
