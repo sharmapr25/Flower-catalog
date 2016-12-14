@@ -12,14 +12,13 @@ var callGetMethod = function(req, res){
 };
 
 var callPostMethod = function(req, res){
-	var content = getContent(req, res);
 	var result = '';
 	req.on('data', function(chunk){
 		result += chunk;
 	})
 
 	req.on('end',function(){
-		res.end(content+result);
+		res.end('hello'+result);
 	})
 }
 
