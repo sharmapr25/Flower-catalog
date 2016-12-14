@@ -1,21 +1,34 @@
 var http = require('http');
 var fs = require('fs');
+var path = require('path');
 
 var read = function(file){
-	return fs.readFileSync('.'+file);
+	return fs.readFileSync(file);
 }
 
+var type = {'.html':'text/html',
+	'.css':'text/css',
+	'.jpg':'image/jpg',
+	'.gif':'image/gif'};
+
 var server = http.createServer(function(req, res){
-	res.setHeader('Content-Type','text/plain');
-	console.log(req.url);
-	if(req.url == '/')
-		res.end('hello');
-	else if(req.url == '/a.txt'){
-		res.end(read(req.url));
+	var filePath = '.'+req.url;
+	if(filePath == './'){
+		filePath = './public/index.html'
 	}
-	res.statusCode = 404;
-	res.end('jina hai toh command+q mar');
+	fs.readFile(filePath, function(error, content){
+		console.log('filePath',filePath);
+		if(error){
+			res.statusCode = 404;
+			res.end('File not found');
+		};
+
+		var contentType = type[path.extname(filePath)];
+		res.setHeader('content-type',contentType);
+		res.end(content,'utf8');
+	});		
 });
+
 
 
 server.listen(8080);
