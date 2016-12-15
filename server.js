@@ -1,10 +1,12 @@
 var http = require('http');
 var fs = require('fs');
 var path = require('path');
+var comment = [];
 
 var read = function(file){
 	return fs.readFileSync(file);
 }
+
 
 var type = {'.html':'text/html',
 	'.css':'text/css',
@@ -14,7 +16,24 @@ var type = {'.html':'text/html',
 	};	// '.ico':'image/ico'};
 
 var server = http.createServer(function(req, res){
+	if(req.url =='/updated'){
+		var data = '';
+		req.on('data',function(chunk){
+			data += chunk;
+		})	
+		req.on('end',function(){
+			comment.unshift(JSON.parse(data));
+			res.end(data);
+		})
+	}
+
+	if(req.url == '/previous'){
+		var data = '';	
+		res.end(JSON.stringify(comment));
+	};
+
 	var filePath = '.'+req.url;
+
 	if(filePath == './'){
 		filePath = './public/index.html'
 	}

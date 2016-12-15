@@ -1,6 +1,6 @@
 var http = require('http');
 
-var outcome = function(res){
+var callback = function(res){
 	res.setEncoding('utf8');
 	var result = "";
 	res.on('data', function(chunk){
@@ -19,6 +19,6 @@ var options = {
 	path:'/a.txt'
 }
 
-var req = http.request(options,outcome);
+var req = http.request(options,callback);
 req.write('Joy');
 req.end();

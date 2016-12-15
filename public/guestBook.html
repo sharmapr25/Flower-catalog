@@ -4,15 +4,16 @@
 	<title>Guest book</title>
 	<script type="text/javascript" src="javascript/guestBook.js"></script>
 </head>
-<body>
+<body >
 	<div id="heading">
 		<a href="../..">Guest Book</a>
 	</div>
-
 	<div id= "comment_form">
 		Name:<input type="text" id="user_name"/>
 		Comment: <textarea id="user_comment" rows="5" cols="60"></textarea>
-		<button>Submit</button>
+		<button onclick="submitComment()">Submit</button>
 	</div>
+
+	<div id="comment_list"></div>
 </body>
 </html>
