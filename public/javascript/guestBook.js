@@ -19,7 +19,7 @@ var createCommentDiv = function(element){
 
 	return main;
 
-}
+}	
 
 var renderRemainingPage = function(element){
 	var list = document.getElementById('comment_list');
