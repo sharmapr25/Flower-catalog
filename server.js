@@ -12,7 +12,8 @@ var type = {'.html':'text/html',
 	'.css':'text/css',
 	'.jpg':'image/jpg',
 	'.gif':'image/gif',
-	'.js':'application/js'
+	'.js':'application/js',
+	'.pdf':'application/pdf'
 	};	// '.ico':'image/ico'};
 
 var server = http.createServer(function(req, res){
