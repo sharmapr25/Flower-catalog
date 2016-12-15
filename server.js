@@ -9,7 +9,8 @@ var read = function(file){
 var type = {'.html':'text/html',
 	'.css':'text/css',
 	'.jpg':'image/jpg',
-	'.gif':'image/gif'
+	'.gif':'image/gif',
+	'.js':'application/js'
 	};	// '.ico':'image/ico'};
 
 var server = http.createServer(function(req, res){
@@ -20,7 +21,6 @@ var server = http.createServer(function(req, res){
 	fs.readFile(filePath, function(error, content){
 		console.log('filePath',filePath);
 		if(error){
-			console.log('hello');
 			res.statusCode = 404;
 			filePath = './';
 			res.end('File not found');
