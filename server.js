@@ -20,12 +20,18 @@ var server = http.createServer(function(req, res){
 	fs.readFile(filePath, function(error, content){
 		console.log('filePath',filePath);
 		if(error){
+			console.log('hello');
 			res.statusCode = 404;
+			filePath = './';
 			res.end('File not found');
-		};
-		var contentType = type[path.extname(filePath)];
-		res.setHeader('content-type',contentType);
-		res.end(content,'utf8');
+			
+		}
+		else{
+			var contentType = type[path.extname(filePath)];
+			res.setHeader('content-type',contentType);
+			res.end(content,'utf8');
+		}
+		
 	});		
 });
 
