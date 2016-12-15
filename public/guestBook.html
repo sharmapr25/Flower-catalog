@@ -2,15 +2,17 @@
 <html>
 <head>
 	<title>Guest book</title>
+	<link rel="stylesheet" type="text/css" href="css/guestBook.css">
 	<script type="text/javascript" src="javascript/guestBook.js"></script>
 </head>
 <body >
-	<div id="heading">
-		<a href="../..">Guest Book</a>
+	<div class="heading">
+		<a href="../.."><<</a>Guest Book
 	</div>
-	<div id= "comment_form">
-		Name:<input type="text" id="user_name"/>
-		Comment: <textarea id="user_comment" rows="5" cols="60"></textarea>
+	Leave a comment
+	<div class="container">
+		Name:<input type="text" id="user_name"/><br>
+		Comment: <textarea id="user_comment" rows="5" cols="60"></textarea><br>
 		<button onclick="submitComment()">Submit</button>
 	</div>
 
