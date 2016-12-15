@@ -1,4 +1,45 @@
+.heading{
+	height: 100px;
+	width: 800px;
+	border-bottom: solid 1px lightgray;
+	margin-left: 60px;
+}
+
+#title{
+	width: 800px;
+	text-align: center;
+	font-family: helvetica;
+	font-size: 28px;
+	font-weight: bold;
+	padding-top: 35px;
+	border-bottom: solid 1px lightgray;
+}
+
+#subtitle{
+	padding-top: 5px;
+    text-align: right;
+    width: 650px;
+    color: orange;
+    font-weight: 600px;
+}
+
 .left{
-	width: 300px;
-	height: 500px;
+	padding-top: 10px;
+	width: 603px;
+	height: 300px;
+}
+
+.left > img{
+	width: 600px;
+	height: 300px;	
+	border: solid 1px black;
+}
+
+#jar > img{
+	width: 50px;
+	height: 50px;
+}
+
+.container{
+	display: flex;
 }

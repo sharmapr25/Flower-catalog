@@ -15,7 +15,7 @@ var outcome = function(res){
 var options = {
 	hostname:'localhost',
 	port:8080,
-	method:'POST',
+	method:'GET',
 	path:'/a.txt'
 }
 

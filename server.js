@@ -9,7 +9,8 @@ var read = function(file){
 var type = {'.html':'text/html',
 	'.css':'text/css',
 	'.jpg':'image/jpg',
-	'.gif':'image/gif'};
+	'.gif':'image/gif'
+	};	// '.ico':'image/ico'};
 
 var server = http.createServer(function(req, res){
 	var filePath = '.'+req.url;
@@ -22,7 +23,6 @@ var server = http.createServer(function(req, res){
 			res.statusCode = 404;
 			res.end('File not found');
 		};
-
 		var contentType = type[path.extname(filePath)];
 		res.setHeader('content-type',contentType);
 		res.end(content,'utf8');
