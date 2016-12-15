@@ -56,9 +56,8 @@ var submitComment = function(){
 var getPreviousCommentList = function(){
 	var http = new XMLHttpRequest();
 	http.onreadystatechange = function(){
-		if(this.readyState == http.DONE && this.status == 200){
+		if(this.readyState == http.DONE && this.status == 200)
 			renderCommentList(JSON.parse(this.responseText));
-		}
 	}
 	http.open('GET','/previous', true);
 	http.send();

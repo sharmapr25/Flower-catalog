@@ -4,7 +4,7 @@ var path = require('path');
 var comment = [];
 
 var read = function(file){
-	return fs.readFileSync(file);
+	return fs.readFileSync(file,'utf8');
 }
 
 
@@ -13,7 +13,8 @@ var type = {'.html':'text/html',
 	'.jpg':'image/jpg',
 	'.gif':'image/gif',
 	'.js':'application/js',
-	'.pdf':'application/pdf'
+	'.pdf':'application/pdf',
+	'.txt':'text/plain'
 	};	// '.ico':'image/ico'};
 
 var server = http.createServer(function(req, res){
@@ -32,6 +33,11 @@ var server = http.createServer(function(req, res){
 		var data = '';	
 		res.end(JSON.stringify(comment));
 	};
+
+	if(req.url == '/contentOfFlower'){
+		var content = read('./public/text/content.txt');
+		res.end(content);
+	}
 
 	var filePath = '.'+req.url;
 
