@@ -2,9 +2,9 @@ var evalDataTime  = function(gmtDate){
 	return gmtDate.substr(0, gmtDate.length-15);
 };
 
-var createDiv = function(id, value){
+var createDiv = function(identity, value){
 	var new_div = document.createElement('div');
-	new_div.id = id;
+	new_div.className = identity;
 	new_div.innerHTML = value;
 	return new_div;
 }
@@ -15,7 +15,7 @@ var createCommentDiv = function(element){
 
 	main.appendChild(createDiv('name',element.name));
 	main.appendChild(createDiv('comment',element.comment));
-	main.appendChild(createDiv('name',element.dateTime));
+	main.appendChild(createDiv('dateTime',element.dateTime));
 
 	return main;
 
@@ -24,6 +24,7 @@ var createCommentDiv = function(element){
 var renderRemainingPage = function(element){
 	var list = document.getElementById('comment_list');
 	list.prepend(createCommentDiv(element));
+	return list;
 }
 
 var renderCommentList = function(content){
