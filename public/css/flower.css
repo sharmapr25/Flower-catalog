@@ -6,11 +6,14 @@ body{
 	width: 800px;
 	text-align: center;
 	font-family: helvetica;
-	font-size: 28px;
+	font-size: 20px;
 	font-weight: bold;
 	padding-top: 35px;
 	border-bottom: solid 1px lightgray;
 	align-content: center;
+	color: orange;
+    font-weight: 600px;
+    padding-bottom: 12px;
 }
 
 .container{
