@@ -1,8 +1,11 @@
+body{
+	margin-left: 78px;
+}
+
 .heading{
-	height: 100px;
+	height: 87px;
 	width: 800px;
-	border-bottom: solid 1px lightgray;
-	margin-left: 60px;
+	border-bottom: solid 1px black;
 }
 
 #title{
@@ -11,8 +14,9 @@
 	font-family: helvetica;
 	font-size: 28px;
 	font-weight: bold;
-	padding-top: 35px;
+	padding-top: 20px;
 	border-bottom: solid 1px lightgray;
+	padding-bottom: 5px;
 }
 
 #subtitle{
@@ -31,7 +35,7 @@
 
 .left > img{
 	width: 600px;
-	height: 300px;	
+	height: 343px;	
 	border: solid 1px black;
 }
 
@@ -42,4 +46,9 @@
 
 .container{
 	display: flex;
+	margin-top: 12px;
+}
+
+.right{
+	padding-top: 98px;
 }
