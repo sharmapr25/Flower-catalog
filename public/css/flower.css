@@ -36,3 +36,15 @@ body{
 	padding-top: 113px;
 	width: 500px;
 }
+
+.image > img{
+	width: 500px;
+	height: 300px;
+	border: 1px solid black;
+}
+
+.detail{
+	padding-top: 113px;
+	padding-left: 2px;
+	width: 300px;
+}
