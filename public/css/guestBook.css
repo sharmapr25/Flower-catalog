@@ -1,3 +1,41 @@
 .heading{
 	height: 50px;
 }
+
+#comment_list{
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+}
+
+.title{
+	margin-top: 13px;
+	border-top: 1px solid black;
+}
+
+.main>div{
+	display: inline-block;
+}
+
+.title>div{
+	font-weight: bold; 
+	display: inline-block;
+}
+
+.dateTime{
+	width: 200px;
+}
+
+.name{
+	width: 200px;
+}
+
+.container{
+	margin-top: 10px;
+}
+
+.heading{
+	text-align: center;
+    font-size: 22px;
+    color: orange;
+    font-weight: 600;
+}

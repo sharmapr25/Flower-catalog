@@ -9,13 +9,18 @@
 	<div class="heading">
 		<a href="../.."><<</a>Guest Book
 	</div>
-	Leave a comment
+	<b>Leave a comment</b>
 	<div class="container">
 		Name:<input type="text" id="user_name"/><br>
 		Comment: <textarea id="user_comment" rows="5" cols="60"></textarea><br>
 		<button onclick="submitComment()">Submit</button>
 	</div>
-
-	<div id="comment_list"></div>
+	<div class="title">
+		<div class="dateTime">Time and date</div>
+		<div class="name">Name</div>
+		<div class="comment">Comment</div>
+	</div>
+	<div id="comment_list">
+	</div>
 </body>
 </html>
