@@ -29,7 +29,7 @@ body{
 
 .left{
 	padding-top: 10px;
-	width: 603px;
+	width: 600px;
 	height: 300px;
 }
 
@@ -42,6 +42,7 @@ body{
 #jar > img{
 	width: 50px;
 	height: 50px;
+	margin-left: 80px;
 }
 
 .container{
@@ -50,5 +51,14 @@ body{
 }
 
 .right{
-	padding-top: 98px;
+	font-size: 12px;
+	padding-top: 100px;
+}
+
+#book{
+	margin-left: 7px;
+}
+
+a{
+	color: blue;
 }
