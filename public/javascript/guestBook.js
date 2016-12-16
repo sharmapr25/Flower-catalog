@@ -1,7 +1,6 @@
-var evalDateTime  = function(gmtDate){
-	return gmtDate.substr(0, gmtDate.length-15);
-};
-
+var formateDate = function(date){
+	return date.substr(0, date.length-4);
+}
 var createDiv = function(identity, value){
 	var new_div = document.createElement('div');
 	new_div.className = identity;
@@ -39,7 +38,7 @@ var submitComment = function(){
 	var user = {
 		name: document.getElementById('user_name').value,
 		comment: document.getElementById('user_comment').value,
-		dateTime: evalDateTime(Date())
+		dateTime: formateDate(new Date().toUTCString())
 	};
 
 	var http = new XMLHttpRequest();
