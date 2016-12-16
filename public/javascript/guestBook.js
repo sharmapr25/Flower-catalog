@@ -1,4 +1,4 @@
-var evalDataTime  = function(gmtDate){
+var evalDateTime  = function(gmtDate){
 	return gmtDate.substr(0, gmtDate.length-15);
 };
 
@@ -39,7 +39,7 @@ var submitComment = function(){
 	var user = {
 		name: document.getElementById('user_name').value,
 		comment: document.getElementById('user_comment').value,
-		dateTime: evalDataTime(Date())
+		dateTime: evalDateTime(Date())
 	};
 
 	var http = new XMLHttpRequest();
