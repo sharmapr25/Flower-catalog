@@ -11,10 +11,10 @@ var createDiv = function(identity, value){
 var createCommentDiv = function(element){
 	var main = document.createElement('div');
 	main.className = "main";
-
-	main.appendChild(createDiv('dateTime',element.dateTime));
-	main.appendChild(createDiv('name',element.name));
-	main.appendChild(createDiv('comment',element.comment));
+	var classes = ['dateTime','name','comment'];
+	classes.forEach(function(className){
+		main.appendChild(createDiv(className,element[className]));
+	})
 
 	return main;
 
@@ -30,7 +30,8 @@ var renderCommentList = function(content){
 	var list = document.getElementById('comment_list');
 	content.forEach(function(element){
 		list.appendChild(createCommentDiv(element));
-	})
+	});
+
 	return list;
 };
 
