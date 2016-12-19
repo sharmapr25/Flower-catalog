@@ -1,5 +1,6 @@
 var fs = require('fs');
 var path = require('path');
+var url=require('url');
 
 var type = {'.html':'text/html',
 	'.css':'text/css',
@@ -16,31 +17,28 @@ var read = function(file){
 
 var comment = [];
 
-var getComment = function(){
-	return JSON.stringify(comment);
+var getComment = function(req, res){
+	res.end(JSON.stringify(comment));
 };
 
-var getContent = function(){
-	return read('./public/text/content.txt');
+var updateCommentList = function(req, res){
+	var data = '';
+	req.on('data',function(chunk){
+		data += chunk;
+	})	
+	req.on('end',function(){
+		comment.unshift(JSON.parse(data));
+		res.end(data);
+	})
 }
 
 var urls = {'/previous': getComment,
-	'/contentOfFlower':getContent}
+	'/updated': updateCommentList
+};
 
 var controller = function(req, res){
-	console.log('let see path ',path.isAbsolute(req.url));
-	if(req.url =='/updated'){
-		var data = '';
-		req.on('data',function(chunk){
-			data += chunk;
-		})	
-		req.on('end',function(){
-			comment.unshift(JSON.parse(data));
-			res.end(data);
-		})
-	}
 	if(urls[req.url]){
-		res.end(urls[req.url]());
+		urls[req.url](req,res);
 	};
 
 	var filePath = '.'+req.url;
