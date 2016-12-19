@@ -44,12 +44,11 @@ var submitComment = function(){
 
 	var http = new XMLHttpRequest();
 	http.onreadystatechange = function(){
-		if(this.readyState == 4 && this.status == 200){
+		if(this.readyState == 4 && this.status == 200)
 			renderRemainingPage(JSON.parse(this.responseText));
-		}
 	};
 
-	http.open("POST",'/updated',true);
+	http.open('POST','/updated',true);
 	http.send(JSON.stringify(user));
 }
 

@@ -8,8 +8,8 @@ var type = {'.html':'text/html',
 	'.gif':'image/gif',
 	'.js':'application/js',
 	'.pdf':'application/pdf',
-	'.txt':'text/plain'
-	};	// '.ico':'image/ico'};
+	'.txt':'text/plain',
+	'.ico':'image/ico'};
 
 var read = function(file){
 	return fs.readFileSync(file,'utf8');
@@ -32,35 +32,44 @@ var updateCommentList = function(req, res){
 	})
 }
 
-var urls = {'/previous': getComment,
-	'/updated': updateCommentList
+var redirectToIndex=function(req,res) {
+	res.writeHead(303,{Location:'/index.html'});
+	res.end();
+}
+
+var urls = {
+	'/previous': getComment,
+	'/updated': updateCommentList,
+	'/': redirectToIndex
 };
 
-var controller = function(req, res){
-	if(urls[req.url]){
-		urls[req.url](req,res);
-	};
-
-	var filePath = '.'+req.url;
-
-	if(filePath == './'){
-		filePath = './public/index.html'
-	}
+var renderFile=function(filePath,req,res) {
 	fs.readFile(filePath, function(error, content){
 		console.log('filePath',filePath);
 		if(error){
 			res.statusCode = 404;
-			filePath = './';
 			res.end('File not found');
-			
 		}
 		else{
 			var contentType = type[path.extname(filePath)];
 			res.setHeader('content-type',contentType);
 			res.end(content,'utf8');
 		}
+	});	
+}
+
+var controller = function(req, res){
+	var filePath="./public";
+
+	var pathToCheck=url.parse(req.url).pathname;
+
+	if(urls[pathToCheck]){
+		urls[pathToCheck](req,res);
+	};
+
+	filePath += pathToCheck;
+	renderFile(filePath,req,res);
 		
-	});		
 }
 
 
