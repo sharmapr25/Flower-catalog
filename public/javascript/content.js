@@ -1,6 +1,6 @@
 var selectContent = function(content){
 	var list = content.split("---");
-	if(window.location.pathname == '/public/agerantum.html')
+	if(window.location.pathname == '/public/ageratum.html')
 		return list[1];
 	return list[0];
 
