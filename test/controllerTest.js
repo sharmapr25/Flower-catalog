@@ -11,11 +11,11 @@ describe('File handler for response', function(){
 			setHeader:function(){}
 		};
 		var stubbedRes = sinon.stub(res);
-		var getContent = fileHandler(stubbedRes,'');
-		getContent(true, 'welcome');
+		var contentOf = fileHandler(stubbedRes,'');
+		contentOf(true, 'welcome');
 		assert.equal(res.statusCode, 404);
 		assert.ok(res.end.called);
 		assert.ok(res.end.calledWith('File not found'));
 		assert.ok(!res.setHeader.called);
-	})
+	});
 });
