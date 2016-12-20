@@ -1,3 +1,4 @@
+ var controllers = {};
 var fs = require('fs');
 var path = require('path');
 var url=require('url');
@@ -43,22 +44,25 @@ var urls = {
 	'/': redirectToIndex
 };
 
-var renderFile=function(filePath,req,res) {
-	fs.readFile(filePath, function(error, content){
-		console.log('filePath',filePath);
+controllers.fileHandlerForResponse=function(res, contentType) {
+	return function(error, content){
 		if(error){
 			res.statusCode = 404;
 			res.end('File not found');
 		}
 		else{
-			var contentType = type[path.extname(filePath)];
 			res.setHeader('content-type',contentType);
 			res.end(content,'utf8');
 		}
-	});	
+	}
 }
 
-var controller = function(req, res){
+var renderFile=function(filePath,req,res) {
+	var contentType = type[path.extname(filePath)];
+	fs.readFile(filePath, controllers.fileHandlerForResponse(res, contentType));	
+}
+
+controllers.controller = function(req, res){
 	var filePath="./public";
 
 	var pathToCheck=url.parse(req.url).pathname;
@@ -73,4 +77,4 @@ var controller = function(req, res){
 }
 
 
-module.exports = controller;
+module.exports = controllers;
