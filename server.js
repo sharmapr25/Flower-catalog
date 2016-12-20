@@ -1,5 +1,5 @@
 var http = require('http');
-var controller = require('./controller');
+var controller = require('./controller').controller;
 
 var server = http.createServer(controller);
 
