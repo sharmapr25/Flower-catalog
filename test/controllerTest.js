@@ -1,38 +1,21 @@
 var assert = require('assert');
-var httpMocks = require('node-mocks-http');
 var controller = require('../controller');
+var sinon = require('sinon');
 
-describe('response', function(){
-
-	it('should return welcome',function(){
-		var request = httpMocks.createRequest({method: 'GET'});
-		var response = httpMocks.createResponse();
-		controller(request, response);
-		assert.equal(200, response.statusCode);
-		assert.equal('welcome', response._getData());
-	});
-
-	it('should return 404 for given url vista',function(){
-		var request = httpMocks.createRequest({
-			method: 'GET',
-			url:'/vista'
-		});
-
-		var response = httpMocks.createResponse();
-		controller(request, response);
-		assert.equal(404, response.statusCode);
-		assert.equal('File not found', response._getData());
-	});
-
-	it('should return 200 and index file for given url /',function(){
-		var request = httpMocks.createRequest({
-			method:'GET',
-			url:'/'
-		});
-		var response = httpMocks.createResponse();
-		controller(request, response);
-		assert.equal(200, response.statusCode);
-		assert.equal('./public/index.html', response._getData());
-
-	});
+describe('File handler for response', function(){
+	var fileHandler = controller.fileHandlerForResponse;
+	it('should return file not found when given error is true',function(){
+		var res = {
+			statusCode:200,
+			end:function(){},
+			setHeader:function(){}
+		};
+		var stubbedRes = sinon.stub(res);
+		var getContent = fileHandler(stubbedRes,'');
+		getContent(true, 'welcome');
+		assert.equal(res.statusCode, 404);
+		assert.ok(res.end.called);
+		assert.ok(res.end.calledWith('File not found'));
+		assert.ok(!res.setHeader.called);
+	})
 });
