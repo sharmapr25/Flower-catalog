@@ -1,4 +1,5 @@
- var controllers = {};
+ var controller = {};
+
 var fs = require('fs');
 var path = require('path');
 var url=require('url');
@@ -11,10 +12,6 @@ var type = {'.html':'text/html',
 	'.pdf':'application/pdf',
 	'.txt':'text/plain',
 	'.ico':'image/ico'};
-
-var read = function(file){
-	return fs.readFileSync(file,'utf8');
-}
 
 var comment = [];
 
@@ -44,37 +41,35 @@ var urls = {
 	'/': redirectToIndex
 };
 
-controllers.fileHandlerForResponse=function(res, contentType) {
+controller.fileHandlerForResponse=function(req,res) {
 	return function(error, content){
 		if(error){
 			res.statusCode = 404;
 			res.end('File not found');
 		}
 		else{
+			var contentType = type[path.extname(req.url)];
 			res.setHeader('content-type',contentType);
 			res.end(content,'utf8');
 		}
 	}
 }
 
-var renderFile=function(filePath,req,res) {
-	var contentType = type[path.extname(filePath)];
-	fs.readFile(filePath, controllers.fileHandlerForResponse(res, contentType));	
+var renderFile=function(pathToCheck,req,res) {
+	var filePath="./public";
+	filePath += pathToCheck;
+	fs.readFile(filePath, controller.fileHandlerForResponse(req,res));	
 }
 
-controllers.controller = function(req, res){
-	var filePath="./public";
-
+controller.handler = function(req, res){
 	var pathToCheck=url.parse(req.url).pathname;
 
 	if(urls[pathToCheck]){
 		urls[pathToCheck](req,res);
 	};
 
-	filePath += pathToCheck;
-	renderFile(filePath,req,res);
-		
+	renderFile(pathToCheck,req,res);
 }
 
 
-module.exports = controllers;
+module.exports = controller;
