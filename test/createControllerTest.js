@@ -1,9 +1,9 @@
 var assert = require('assert');
 var Controller = require('../createController');
 var sinon = require('sinon');
-var fs = require('fs');
 
 var stubbedRes, res;
+var fs = {readFile:function(){}};
 
 var makeResponse = function(){
 	return {
@@ -19,72 +19,57 @@ beforeEach(function(){
 	stubbedRes = sinon.stub(res);
 });
 
-describe('generate a controller',function(){
+describe('generated controller',function(){
 	
-	describe('should generate a new general controller',function(){
+	describe('add customize routes to controller',function(){
 		
-		var printHello = function(){
-			return {code:200,
-				content:'Hello'};
-		};
+		var printHello = sinon.spy(function(req, res){
+			res.statusCode = 200,
+			res.end('Hello');
+		});
 
-		var isValidUrl = function(url){
-			return url == '/';
-		};
+		sinon.stub(fs,'readFile').callsArgWith(2,true,'');
 
-		var printError = function(){
-			return {code:404,
-				content:'Invalid url'};
-		}
+		var controller= new Controller(fs);
+		controller.addRoute('/','GET',printHello);
 
-		var controller= new Controller(isValidUrl, printHello, printError);
-
-		it('should return hello for given url /',function(){
-			var req = {url:'/'};
+		it('should return exact response to given url',function(){
+			var req = {url:'/', method:'GET'};
 
 			controller.handle(req, stubbedRes);
 
-			assert.equal(res.statusCode, 200);
+			assert.ok(printHello.calledWith(req, stubbedRes));
+			assert.equal(200, res.statusCode);
 			assert.ok(res.end.calledWith('Hello'));
 		});
 
-		it('should return invalid url for given url /print',function(){
-			var req = {url:'/print'};
+		it('should return an error for invalid url',function(){
+			var req = {url:'/print', method:'GET'};
 
 			controller.handle(req, stubbedRes);
 
-			assert.equal(res.statusCode, 404);
-			assert.ok(res.end.calledWith('Invalid url'));
+			assert.equal(404, res.statusCode);
+			assert.ok(res.end.calledWith('invalid url'));
 		});	
-	});	
+	});
 
-	describe('should generate a controller for accepting two urls',function(){
-		var printInstruction = function(){
-			return {code:200,
-				content:'This is an instruction page'};
+	describe('should generate a controller for accepts two urls',function(){
+		var printInstruction = function(req, res){
+			res.statusCode = 200;
+			res.end('This is an instruction page');
 		};
 
-		var printWelcome = function(url){
-			if(url == '/'){
-				return {code:200,
-					content:'welcome'};
-			}
-			return printInstruction();
-		};
-		
-		var printError = function(){
-			return {code:404,
-				content:'Given url is invalid'};
+		var printWelcome = function(req, res){
+			res.statusCode = 200;
+			res.end('welcome');
 		};
 
-		var isValidUrl = function(url){
-			return (url == '/' || url == '/instruction');
-		}
+		var controller = new Controller(fs);
+		controller.addRoute('/', 'GET', printWelcome);
+		controller.addRoute('/instruction','GET', printInstruction);
 
-		var controller = new Controller(isValidUrl, printWelcome, printError);
-
-		it('should return 200 and welcome for given url /',function(){
-			var req = {url:'/'};
+		it('should return 200 and welcome for given url',function(){
+			var req = {url:'/', method:'GET'};
 
 			controller.handle(req, stubbedRes);
 
@@ -92,8 +77,8 @@ describe('generate a controller',function(){
 			assert.ok(res.end.calledWith('welcome'));
 		});
 
-		it('should return 200 for given url /instruction', function(){
-			var req = {url:'/instruction'};
+		it('should return instruction message for given url', function(){
+			var req = {url:'/instruction',method:'GET'};
 
 			controller.handle(req, stubbedRes);
 
@@ -101,51 +86,14 @@ describe('generate a controller',function(){
 			assert.ok(res.end.calledWith('This is an instruction page'));
 		});
 
-		it('should return an error for given url /url',function(){
-			var req = {url:'/url'};
+		it('should return an error for not valid url',function(){
+			var req = {url:'/url', method:'GET'};
 
 			controller.handle(req, stubbedRes);
 
 			assert.equal(res.statusCode, 404);
-			assert.ok(res.end.calledWith('Given url is invalid'));
+			assert.ok(res.end.calledWith('invalid url'));
 		});
 	});
 
-	describe('generate a controller for reading file for given url',function(){
-		var getContent = function(){
-			return {code:303,
-				content:fs.readFileSync('./test/data/hello.txt','utf-8')};
-		};
-
-		var printError = function(){
-			return {code:404,
-				content:'File not found'};
-		};
-
-		var isValidUrl = function(url){
-			return url == '/hello';
-		};
-
-		var controller = new Controller(isValidUrl, getContent, printError);
-
-		it('should return content of a file for given url /hello',function(){
-			var req = {url:'/hello'};
-			var expectedMessage = 'Hello, This is a home page.';
-
-			controller.handle(req, stubbedRes);
-
-			assert.equal(res.statusCode, 303);
-			assert.ok(res.end.calledWith(expectedMessage));
-
-		});
-
-		it('should return an error for given url /foobar',function(){
-			var req = {url:'/foobar'};
-
-			controller.handle(req, stubbedRes);
-
-			assert.equal(res.statusCode, 404);
-			assert.ok(res.end.calledWith('File not found'));
-		});
-	});
 });

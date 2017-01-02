@@ -1,20 +1,34 @@
-var Controller = function(conditionFor, callbackOnTrue, callbackOnFalse){
-	this.conditionFor = conditionFor;
-	this.callbackOnTrue = callbackOnTrue;
-	this.callbackOnFalse = callbackOnFalse;
+var Controller = function(fileSystem){
+	this.fileSystem = fileSystem;
+	this.table = {};
 };
 
-Controller.prototype.handle = function(req, res){
-	if(this.conditionFor(req.url)){
-		var truthyValue = this.callbackOnTrue(req.url);
-		res.statusCode = truthyValue.code;
-		res.end(truthyValue.content);
+Controller.prototype = {
+	handle: function(req, res){
+		if(this.table[req.url])
+			this.table[req.url][req.method](req, res);
+		else
+			this.renderFile(req, res);
+	},
+
+	addRoute: function(url, method, action){
+		this.table[url] = {};
+		this.table[url][method] = action;
+	},
+
+	renderFile : function(req, res){
+		this.fileSystem.readFile(req.url, "utf-8", function(error, content){
+			if(error){
+				res.statusCode = 404;
+				res.end('invalid url');
+				return;
+			}
+			else{
+				res.statusCode = 200;
+				res.end(content);
+			}
+		});
 	}
-	else{
-		var falsyValue = this.callbackOnFalse(req.url);
-		res.statusCode = falsyValue.code;
-		res.end(falsyValue.content);
-	}
-}
+};
 
 module.exports = Controller;
