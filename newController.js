@@ -32,6 +32,7 @@ var urls = {
 
 var Controller = function(fileSystem){
 	this.fileSystem = fileSystem;
+	this.foobar="This is inside the Controller object";
 }
 
 Controller.prototype = {

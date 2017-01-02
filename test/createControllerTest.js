@@ -53,7 +53,7 @@ describe('generated controller',function(){
 		});	
 	});
 
-	describe('should generate a controller for accepts two urls',function(){
+	describe('should add customize routes for accepts two urls',function(){
 		var printInstruction = function(req, res){
 			res.statusCode = 200;
 			res.end('This is an instruction page');
@@ -96,4 +96,30 @@ describe('generated controller',function(){
 		});
 	});
 
+	describe('add customize routes for redirect',function(){
+		var homePage = sinon.spy(function(req, res){
+			res.statusCode = 200;
+			res.end('Hello');
+		});
+
+		var rediretToHomePage = sinon.spy(function(req,res){
+			res.writeHead(303,{Location:'/'});
+			res.statusCode = 303;
+			res.end();
+		})
+
+		var controller = new Controller(fs);
+		controller.addRoute('/', 'GET', homePage);
+		controller.addRoute('/redirectTo','GET',rediretToHomePage);
+
+		it('should redirect to a specific url for given url',function(){
+			
+			var req = {url:'/redirectTo', method:'GET'};
+
+			controller.handle(req, stubbedRes);
+
+			assert.equal(303, res.statusCode);
+			assert.ok(res.writeHead.calledWith(303,{Location:'/'}));
+		});
+	});
 });
