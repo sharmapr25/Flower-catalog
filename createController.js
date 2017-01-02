@@ -17,7 +17,7 @@ Controller.prototype = {
 	},
 
 	renderFile : function(req, res){
-		this.fileSystem.readFile(req.url, "utf-8", function(error, content){
+		this.fileSystem.readFile(req.url, function(error, content){
 			if(error){
 				res.statusCode = 404;
 				res.end('invalid url');
@@ -25,7 +25,7 @@ Controller.prototype = {
 			}
 			else{
 				res.statusCode = 200;
-				res.end(content);
+				res.end(content,'utf8');
 			}
 		});
 	}
