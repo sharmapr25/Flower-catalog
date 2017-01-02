@@ -1,10 +1,9 @@
 var assert = require('assert');
 var Controller = require('../controller');
 var sinon = require('sinon');
+var fs;
 
 describe('myController', function(){
-	var controller = new Controller();
-	var fs;
 
 	var makeResponse = function(){
 		return {
@@ -21,10 +20,10 @@ describe('myController', function(){
 
 	it('should return response and 200 status code for given url /',function(){
 		var res = makeResponse();
-		var req = {url:'/'};
+		var req = {url:'/', method:'GET'};
 		var stubbedRes = sinon.stub(res);
 		
-		var controller=new Controller(fs);
+		var controller = new Controller(fs);
 		controller.handle(req, stubbedRes);
 		
 		assert.equal(res.statusCode, 303);
@@ -34,13 +33,13 @@ describe('myController', function(){
 
 	it('should return 404 status code for given invalid url',function(){
 		var res = makeResponse();
-		var req = {url:'hello'};
+		var req = {url:'hello', method:'GET'};
 		var stubbedRes = sinon.stub(res);
 
 		sinon.stub(fs,"readFile").callsArgWith(1,true,'');
 
-		var controller=new Controller(fs);
-		controller.handle(req,stubbedRes);
+		var controller = new Controller(fs);
+		controller.handle(req, stubbedRes);
 		
 		assert.equal(res.statusCode, 404);
 		assert.ok(res.end.calledWith('File not found'));
@@ -54,7 +53,7 @@ describe('myController', function(){
 		sinon.stub(fs, "readFile").callsArgWith(1, false, 'Welcome');
 
 		var controller = new Controller(fs);
-		controller.handle(req,stubbedRes);
+		controller.handle(req, stubbedRes);
 
 		assert.equal(res.statusCode, 200);
 		assert.ok(res.end.calledWith('Welcome'));
@@ -65,10 +64,10 @@ describe('myController', function(){
 		var req = {url:'css/index.css'};
 		var stubbedRes = sinon.stub(res);
 
-		sinon.stub(fs, "readFile").callsArgWith(1, false, 'Css is here');
+		sinon.stub(fs, "readFile").callsArgWith(1, false, 'Css is here')
 
 		var controller = new Controller(fs);
-		controller.handle(req,stubbedRes);
+		controller.handle(req, stubbedRes);
 
 		assert.equal(res.statusCode,200);
 		assert.ok(res.setHeader.calledWith('content-type','text/css'));
