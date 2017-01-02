@@ -1,5 +1,5 @@
 var assert = require('assert');
-var Controller = require('../newController');
+var Controller = require('../controller');
 var sinon = require('sinon');
 
 describe('myController', function(){
@@ -37,7 +37,7 @@ describe('myController', function(){
 		var req = {url:'hello'};
 		var stubbedRes = sinon.stub(res);
 
-		sinon.stub(fs,"readFile").callsArgWith(2,true,'');
+		sinon.stub(fs,"readFile").callsArgWith(1,true,'');
 
 		var controller=new Controller(fs);
 		controller.handle(req,stubbedRes);
@@ -51,7 +51,7 @@ describe('myController', function(){
 		var req = {url:'index.html'};
 		var stubbedRes = sinon.stub(res);
 
-		sinon.stub(fs, "readFile").callsArgWith(2, false, 'Welcome');
+		sinon.stub(fs, "readFile").callsArgWith(1, false, 'Welcome');
 
 		var controller = new Controller(fs);
 		controller.handle(req,stubbedRes);
@@ -65,7 +65,7 @@ describe('myController', function(){
 		var req = {url:'css/index.css'};
 		var stubbedRes = sinon.stub(res);
 
-		sinon.stub(fs, "readFile").callsArgWith(2, false, 'Css is here');
+		sinon.stub(fs, "readFile").callsArgWith(1, false, 'Css is here');
 
 		var controller = new Controller(fs);
 		controller.handle(req,stubbedRes);
@@ -74,19 +74,6 @@ describe('myController', function(){
 		assert.ok(res.setHeader.calledWith('content-type','text/css'));
 		assert.ok(res.end.calledWith('Css is here'));
 	});
-
-	it('should return an empty object for given url previous',function(){
-		var res = makeResponse();
-		var req = {url:'previous', method:'GET'};
-		var stubbedRes = sinon.stub(res);
-		
-		var controller = new Controller(fs);
-		controller.handle(req, stubbedRes);
-
-		assert.equal(res.statusCode, 200);
-		assert.ok(res.end.calledWith('[]'));
-	});
-
 });
 
 
