@@ -1,3 +1,5 @@
+var path = require('path');
+
 var type = {'.html':'text/html',
 	'.css':'text/css',
 	'.jpg':'image/jpg',
@@ -7,8 +9,6 @@ var type = {'.html':'text/html',
 	'.txt':'text/plain',
 	'.ico':'image/ico'
 };
-
-var path = require('path');
 
 var RouteHandler = function(fileSystem){
 	this.fileSystem = fileSystem;

@@ -3,7 +3,7 @@ var Controller = require('../controller');
 var sinon = require('sinon');
 var fs;
 
-describe('myController', function(){
+describe('Controller', function(){
 
 	var makeResponse = function(){
 		return {
