@@ -9,7 +9,9 @@ describe('myController', function(){
 	var makeResponse = function(){
 		return {
 			statusCode:0,
-			end:function(){}
+			end:function(){},
+			setHeader:function(){},
+			writeHead:function(){}
 		};
 	};
 
@@ -17,7 +19,7 @@ describe('myController', function(){
 		fs = {readFile:function(){}};
 	})
 
-	it('should return welcome and 200 status code for given url /',function(){
+	it('should return response and 200 status code for given url /',function(){
 		var res = makeResponse();
 		var req = {url:'/'};
 		var stubbedRes = sinon.stub(res);
@@ -25,8 +27,8 @@ describe('myController', function(){
 		var controller=new Controller(fs);
 		controller.handle(req, stubbedRes);
 		
-		assert.equal(res.statusCode, 200);
-		assert.ok(res.end.calledWith('welcome'));
+		assert.equal(res.statusCode, 303);
+		assert.ok(res.writeHead.calledWith(303, {Location:'/index.html'}));
 	});
 
 
@@ -57,6 +59,34 @@ describe('myController', function(){
 		assert.equal(res.statusCode, 200);
 		assert.ok(res.end.calledWith('Welcome'));
 	});
+
+	it('should return response for given url',function(){
+		var res = makeResponse();
+		var req = {url:'css/index.css'};
+		var stubbedRes = sinon.stub(res);
+
+		sinon.stub(fs, "readFile").callsArgWith(2, false, 'Css is here');
+
+		var controller = new Controller(fs);
+		controller.handle(req,stubbedRes);
+
+		assert.equal(res.statusCode,200);
+		assert.ok(res.setHeader.calledWith('content-type','text/css'));
+		assert.ok(res.end.calledWith('Css is here'));
+	});
+
+	it('should return an empty object for given url previous',function(){
+		var res = makeResponse();
+		var req = {url:'previous', method:'GET'};
+		var stubbedRes = sinon.stub(res);
+		
+		var controller = new Controller(fs);
+		controller.handle(req, stubbedRes);
+
+		assert.equal(res.statusCode, 200);
+		assert.ok(res.end.calledWith('[]'));
+	});
+
 });
 
 
