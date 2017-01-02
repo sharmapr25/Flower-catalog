@@ -41,7 +41,7 @@ RouteHandler.prototype = {
 			var contentType = type[path.extname(req.url)];
 			res.setHeader('content-type',contentType);
 			res.statusCode=200;
-			res.end(content,'utf8');
+			res.end(content);
 			
 		});
 	}
