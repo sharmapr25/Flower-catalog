@@ -24,7 +24,8 @@ describe('generate a controller',function(){
 	describe('should generate a new general controller',function(){
 		
 		var printHello = function(){
-			return 'Hello';
+			return {code:200,
+				content:'Hello'};
 		};
 
 		var isValidUrl = function(url){
@@ -32,7 +33,8 @@ describe('generate a controller',function(){
 		};
 
 		var printError = function(){
-			return 'Invalid url';
+			return {code:404,
+				content:'Invalid url'};
 		}
 
 		var controller= new Controller(isValidUrl, printHello, printError);
@@ -58,17 +60,21 @@ describe('generate a controller',function(){
 
 	describe('should generate a controller for accepting two urls',function(){
 		var printInstruction = function(){
-			return 'This is an instruction page';
+			return {code:200,
+				content:'This is an instruction page'};
 		};
 
 		var printWelcome = function(url){
-			if(url == '/')
-				return 'welcome';
+			if(url == '/'){
+				return {code:200,
+					content:'welcome'};
+			}
 			return printInstruction();
 		};
 		
 		var printError = function(){
-			return 'Given url is invalid';
+			return {code:404,
+				content:'Given url is invalid'};
 		};
 
 		var isValidUrl = function(url){
@@ -107,11 +113,13 @@ describe('generate a controller',function(){
 
 	describe('generate a controller for reading file for given url',function(){
 		var getContent = function(){
-			return fs.readFileSync('./test/data/hello.txt','utf-8');
+			return {code:303,
+				content:fs.readFileSync('./test/data/hello.txt','utf-8')};
 		};
 
 		var printError = function(){
-			return 'File not found';
+			return {code:404,
+				content:'File not found'};
 		};
 
 		var isValidUrl = function(url){
@@ -126,7 +134,7 @@ describe('generate a controller',function(){
 
 			controller.handle(req, stubbedRes);
 
-			assert.equal(res.statusCode, 200);
+			assert.equal(res.statusCode, 303);
 			assert.ok(res.end.calledWith(expectedMessage));
 
 		});

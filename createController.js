@@ -6,12 +6,14 @@ var Controller = function(conditionFor, callbackOnTrue, callbackOnFalse){
 
 Controller.prototype.handle = function(req, res){
 	if(this.conditionFor(req.url)){
-		res.statusCode = 200;
-		res.end(this.callbackOnTrue(req.url));
+		var truthyValue = this.callbackOnTrue(req.url);
+		res.statusCode = truthyValue.code;
+		res.end(truthyValue.content);
 	}
 	else{
-		res.statusCode = 404;
-		res.end(this.callbackOnFalse(req.url));
+		var falsyValue = this.callbackOnFalse(req.url);
+		res.statusCode = falsyValue.code;
+		res.end(falsyValue.content);
 	}
 }
 
