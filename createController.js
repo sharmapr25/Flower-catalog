@@ -7,11 +7,11 @@ var Controller = function(conditionFor, callbackOnTrue, callbackOnFalse){
 Controller.prototype.handle = function(req, res){
 	if(this.conditionFor(req.url)){
 		res.statusCode = 200;
-		res.end(this.callbackOnTrue());
+		res.end(this.callbackOnTrue(req.url));
 	}
 	else{
 		res.statusCode = 404;
-		res.end(this.callbackOnFalse());
+		res.end(this.callbackOnFalse(req.url));
 	}
 }
 

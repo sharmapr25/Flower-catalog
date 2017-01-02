@@ -17,7 +17,8 @@ beforeEach(function(){
 	stubbedRes = sinon.stub(res);
 })
 
-describe('should generate a general new controller',function(){
+describe('generate a controller',function(){
+	describe('should generate a new general controller',function(){
 		var printHello = function(){
 			return 'Hello';
 		};
@@ -45,5 +46,48 @@ describe('should generate a general new controller',function(){
 			assert.equal(res.statusCode, 404);
 			assert.ok(res.end.calledWith('Invalid url'));
 		});	
-		
 	});	
+
+	describe('should generate a controller for accepting two urls',function(){
+		var printInstruction = function(){
+			return 'This is an instruction page';
+		};
+
+		var printWelcome = function(url){
+			if(url == '/')
+				return 'welcome';
+			return printInstruction();
+		};
+		
+		var printError = function(){
+			return 'Given url is invalid';
+		};
+
+		var isValidUrl = function(url){
+			return (url == '/' || url == '/instruction');
+		}
+
+		var controller = new Controller(isValidUrl, printWelcome, printError);
+
+		it('should return 200 and welcome for given url /',function(){
+			var req = {url:'/'};
+			controller.handle(req, stubbedRes);
+			assert.equal(res.statusCode, 200);
+			assert.ok(res.end.calledWith('welcome'));
+		});
+
+		it('should return 200 for given url /instruction', function(){
+			var req = {url:'/instruction'};
+			controller.handle(req, stubbedRes);
+			assert.equal(res.statusCode, 200);
+			assert.ok(res.end.calledWith('This is an instruction page'));
+		});
+
+		it('should return an error for given url /url',function(){
+			var req = {url:'/url'};
+			controller.handle(req, stubbedRes);
+			assert.equal(res.statusCode, 404);
+			assert.ok(res.end.calledWith('Given url is invalid'));
+		});
+	});
+});
