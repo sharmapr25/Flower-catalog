@@ -19,8 +19,16 @@ npm start will start the server
 Once the server has started, you may visit http://localhost:8080 on your 
 browser
 
-## Todo
+## Feature
++ #### Generic controller
+	Use controller to generate any number of server via route handler
 
-Need to add tests. Now that the controller is refactored, I can add mocking.
+## Test
+* Tests for route handler
+* Tests for controller
 
-  
+####  How to run the tests
+
+```shell
+npm test
+```
