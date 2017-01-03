@@ -20,8 +20,8 @@ Once the server has started, you may visit http://localhost:8080 on your
 browser
 
 ## Feature
-+ #### Generic controller
-	Use controller to generate any number of server via route handler
+#### Generic controller
+- Use controller to generate any number of server via route handler
 
 ## Test
 * Tests for route handler
