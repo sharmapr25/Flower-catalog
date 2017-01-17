@@ -3,10 +3,10 @@ body{
 }
 
 .heading{
-	width: 800px;
+	width: 95%;
 	text-align: center;
 	font-family: helvetica;
-	font-size: 20px;
+	font-size: 28px;
 	font-weight: bold;
 	padding-top: 35px;
 	border-bottom: solid 1px lightgray;
@@ -18,33 +18,34 @@ body{
 
 .container{
 	display: flex;
-	font-size: 12px;
+	font-size: 20px;
 	margin-top: 12px;
+	width: 95%
 }
 
 .left{
-	width:303px;
+	width:50%;
 }
 
 .left > img{
-	width: 300px;
-	height: 300px;
+	width: 98%;
+	height: 600px;
 	border: 1px solid black;
 }
 
 .right{
 	padding-top: 113px;
-	width: 500px;
+	width: 50%
 }
 
 .image>img{
-	width: 500px;
-	height: 300px;
+	width: 98%;
+	height: 600px;
 	border: 1px solid black;
 }
 
 .detail{
 	padding-top: 113px;
 	padding-left: 2px;
-	width: 300px;
+	width: 50%;
 }
