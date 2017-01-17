@@ -3,16 +3,16 @@ body{
 }
 
 .heading{
-	height: 87px;
-	width: 800px;
+	height: 120px;
+	width: 95%;
 	border-bottom: solid 1px black;
 }
 
 #title{
-	width: 800px;
+	width: 100%;
 	text-align: center;
 	font-family: helvetica;
-	font-size: 28px;
+	font-size: 40px;
 	font-weight: bold;
 	padding-top: 20px;
 	border-bottom: solid 1px lightgray;
@@ -22,36 +22,38 @@ body{
 #subtitle{
 	padding-top: 5px;
     text-align: right;
-    width: 650px;
+    width:80%;
     color: orange;
+    font-size: 28px;
     font-weight: 600px;
 }
 
 .left{
 	padding-top: 10px;
-	width: 600px;
-	height: 300px;
+	width: 70%;
+	height: 600px;
 }
 
 .left > img{
-	width: 600px;
-	height: 343px;	
+	width: 100%;
+	height: 100%;	
 	border: solid 1px black;
 }
 
 #jar > img{
-	width: 50px;
-	height: 50px;
+	width: 100px;
+	height: 100px;
 	margin-left: 80px;
 }
 
 .container{
 	display: flex;
 	margin-top: 12px;
+	width: 95%;
 }
 
 .right{
-	font-size: 12px;
+	font-size: 25px;
 	padding-top: 100px;
 }
 

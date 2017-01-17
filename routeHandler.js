@@ -24,7 +24,7 @@ RouteHandler.prototype = {
 	},
 
 	addRoute: function(url, method, action){
-		this.table[url] = {};
+		this.table[url] = this.table[url] || {};
 		this.table[url][method] = action;
 	},
 
