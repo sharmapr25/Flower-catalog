@@ -1,8 +1,6 @@
 var fs = require('fs');
 var RouteHandler = require('./routeHandler');
 
-// var commentsList = [];
-
 var redirectToIndex=function(req,res) {
 	res.writeHead(303,{Location:'/index.html'});
 	res.statusCode = 303;
