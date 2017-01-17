@@ -17,7 +17,7 @@ body{
 }
 
 .main>div{
-	font-size: 14px;
+	font-size: 20px;
 	display: inline-block;
 }
 
@@ -27,7 +27,7 @@ body{
 }
 
 .dateTime{
-	width: 200px;
+	width: 300px;
 }
 
 .name{

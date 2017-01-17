@@ -1,7 +1,7 @@
 var fs = require('fs');
 var RouteHandler = require('./routeHandler');
 
-var commentsList = [];
+// var commentsList = [];
 
 var redirectToIndex=function(req,res) {
 	res.writeHead(303,{Location:'/index.html'});
@@ -15,14 +15,16 @@ var updateCommentList = function(req, res){
 		data += chunk;
 	})	
 	req.on('end',function(){
+		var commentsList = JSON.parse(fs.readFileSync('./comment.json','utf-8'))
 		commentsList.unshift(JSON.parse(data));
+		fs.writeFileSync('./comment.json',JSON.stringify(commentsList));
 		res.end(data);
 	})
 }
 
 var getComments = function(req, res){
 	res.statusCode = 200;
-	res.end(JSON.stringify(commentsList));
+	res.end(fs.readFileSync('./comment.json','utf-8'));
 }
 
 var Controller = function(fileSystem){
