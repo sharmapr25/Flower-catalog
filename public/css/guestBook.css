@@ -1,3 +1,7 @@
+body{
+	font-size: 25px;
+}
+
 .heading{
 	height: 50px;
 }
@@ -34,9 +38,15 @@
 	margin-top: 10px;
 }
 
+button{
+	font-size: 20px;
+	width: 100px;
+	border-radius: 5px;
+}
+
 .heading{
 	text-align: center;
-    font-size: 22px;
+    font-size: 28px;
     color: orange;
     font-weight: 600;
 }
